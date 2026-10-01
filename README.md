@@ -26,3 +26,8 @@ Stage 07 — ProductCard + map()
 - Added a button to toggle the expensive-products filter.
 - Used `onClick` to update the state.
 - Combined a conditional price filter with the search filter.
+### Stage 11 — Clear Search
+
+- Added a button to clear the search state.
+- Used `setSearch("")` to reset the search.
+- Made the input a controlled input with `value={search}`.

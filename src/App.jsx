@@ -23,9 +23,14 @@ function App() {
       onClick={() => setShowExpensive(!showExpensive)}>
         Show Expensive Products
       </button>
+      <button
+      onClick={() => setSearch("")}>
+        Clear Search
+      </button>
       <input
        type="text"
        placeholder='Search products'
+       value={search}
        onChange={(event) => setSearch(event.target.value)} />
     {filteredProducts.map((product) => (
   <ProductCard
