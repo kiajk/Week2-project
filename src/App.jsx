@@ -7,16 +7,18 @@ function App() {
   { id: 2, name: "Keyboard", price: 80 },
   { id: 3, name: "Desk", price: 300 },
 ]
+  const filteredProducts = products.filter((product) =>
+  product.price > 100)
   return (
     <div>
       <h1>Product Explorer</h1>
-    {products.map((product) => (
-      <ProductCard
-      key={product.id}
-      name={product.name}
-      price={product.price}
-      />
-    ))}
+    {filteredProducts.map((product) => (
+  <ProductCard
+    key={product.id}
+    name={product.name}
+    price={product.price}
+  />
+))}
       
     </div>
   )
