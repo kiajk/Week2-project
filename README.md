@@ -31,3 +31,8 @@ Stage 07 — ProductCard + map()
 - Added a button to clear the search state.
 - Used `setSearch("")` to reset the search.
 - Made the input a controlled input with `value={search}`.
+### Stage 12 — Results Count
+
+- Used `filteredProducts.length` to count filtered products.
+- Displayed the number of matching products.
+- The count updates automatically when search or filters change.

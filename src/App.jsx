@@ -19,6 +19,7 @@ function App() {
   return (
     <div>
       <h1>Product Explorer</h1>
+      <p>Products found: {filteredProducts.length}</p>
       <button
       onClick={() => setShowExpensive(!showExpensive)}>
         Show Expensive Products
