@@ -11,10 +11,11 @@ function App() {
     <div>
       <h1>Product Explorer</h1>
     {products.map((product) => (
-      <div>
-      <p>{product.name}</p>
-      <p>{product.price}</p>
-      </div>
+      <ProductCard
+      key={product.id}
+      name={product.name}
+      price={product.price}
+      />
     ))}
       
     </div>
