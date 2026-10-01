@@ -20,3 +20,9 @@ Stage 07 — ProductCard + map()
 - Used `onChange` to update the search state.
 - Used `filter()` and `includes()` to search products.
 - Made the search case-insensitive with `toLowerCase()`.
+### Stage 10 — Toggle Filter
+
+- Added `showExpensive` state with `useState`.
+- Added a button to toggle the expensive-products filter.
+- Used `onClick` to update the state.
+- Combined a conditional price filter with the search filter.
