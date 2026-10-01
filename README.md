@@ -14,3 +14,9 @@ Stage 07 — ProductCard + map()
 - Used `filter()` to create a new array from products.
 - Filtered products by price greater than 100.
 - Rendered the filtered array with `map()`.
+### Stage 09 — Search
+
+- Added `useState` to store the search text.
+- Used `onChange` to update the search state.
+- Used `filter()` and `includes()` to search products.
+- Made the search case-insensitive with `toLowerCase()`.
