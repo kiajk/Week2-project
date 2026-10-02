@@ -1,10 +1,12 @@
-import ProductCard from './ProductCard'
+import ProductCard from './components/ProductCard'
 import './App.css'
 import { useState } from 'react'
+import SearchBar from './components/SearchBar'
 
 function App() {
   const [search, setSearch] = useState("");
   const [showExpensive, setShowExpensive] = useState(false);
+  const [sortAscending, setSortAscending] = useState(false);
 
   const products = [
   { id: 1, name: "Laptop", price: 1200 },
@@ -28,11 +30,13 @@ function App() {
       onClick={() => setSearch("")}>
         Clear Search
       </button>
-      <input
+      {/* <input
        type="text"
        placeholder='Search products'
        value={search}
-       onChange={(event) => setSearch(event.target.value)} />
+       onChange={(event) => setSearch(event.target.value)} /> */}
+       {/* commented this beacuse i moved it to searchbar.jsx */}
+       <SearchBar  search={search} setSearch={setSearch} />
     {filteredProducts.map((product) => (
   <ProductCard
     key={product.id}
