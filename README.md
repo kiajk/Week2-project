@@ -71,3 +71,8 @@ Stage 17 — Empty State
 - Added an Available Only checkbox.
 - Filtered products by stock availability.
 - Combined availability filtering with search, category, and price filters.
+### Stage 20 — Sort by Price
+
+- Added price sorting controls.
+- Implemented Low to High and High to Low sorting.
+- Used a copied array before `sort()` to avoid mutating filtered results.

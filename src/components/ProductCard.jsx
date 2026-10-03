@@ -1,5 +1,5 @@
 // Reusable component that receives product data through props
-function ProductCard({ name, price }) {
+function ProductCard({ name, price}) {
   return (
     <div>
       {/* Display the product name */}
@@ -7,6 +7,7 @@ function ProductCard({ name, price }) {
 
       {/* Display the product price */}
       <p>{price}</p>
+      {/* <p>stock : {stock}</p> */}
     </div>
   )
 }

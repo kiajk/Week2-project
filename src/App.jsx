@@ -7,6 +7,7 @@ import ErrorState from './components/ErrorState'
 import EmptyState from './components/EmptyState'
 import CategoryFilter from './components/CategoryFilter'
 import AvailabilityFilter from './components/AvailabilityFilter'
+import SortControl from './components/SortControl'
 
 
 function App() {
@@ -16,8 +17,8 @@ function App() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [category, setCategory] = useState("")
-  const [availableOnly, setAvailableOnly] = useState(false)
+  const [category, setCategory] = useState("");
+  const [availableOnly, setAvailableOnly] = useState(false);
 
   useEffect(() => {
    async function loadProducts() {
@@ -46,6 +47,9 @@ function App() {
     product.title.toLowerCase().includes(search.toLowerCase())
   )
   const categories = [...new Set(products.map((product) => product.category))]
+  const sortedProducts = [...filteredProducts].sort((a, b) =>
+  sortAscending ? a.price - b.price : b.price - a.price
+)
 
   return (
     <div>
@@ -73,6 +77,10 @@ function App() {
         search={search}
         setSearch={setSearch}
       />
+      <SortControl
+        sortAscending={sortAscending}
+        setSortAscending={setSortAscending}
+      />
       <CategoryFilter
         category={category}
          setCategory={setCategory}
@@ -86,7 +94,7 @@ function App() {
      {filteredProducts.length === 0 ? (
   <EmptyState />
 ) : (
-  filteredProducts.map((product) => (
+  sortedProducts.map((product) => (
     <ProductCard
       key={product.id}
       name={product.title}
