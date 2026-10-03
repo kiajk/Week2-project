@@ -76,3 +76,7 @@ Stage 17 — Empty State
 - Added price sorting controls.
 - Implemented Low to High and High to Low sorting.
 - Used a copied array before `sort()` to avoid mutating filtered results.
+### Stage 21 — Clear Filters
+
+- Added a button to reset all search and filter states.
+- Clears search, category, availability, price filter, and sorting.

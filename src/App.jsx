@@ -20,6 +20,14 @@ function App() {
   const [category, setCategory] = useState("");
   const [availableOnly, setAvailableOnly] = useState(false);
 
+  function clearFilters() {
+  setSearch("")
+  setCategory("")
+  setAvailableOnly(false)
+  setShowExpensive(false)
+  setSortAscending(false)
+}
+
   useEffect(() => {
    async function loadProducts() {
   try {
@@ -65,6 +73,9 @@ function App() {
         onClick={() => setShowExpensive(!showExpensive)}
       >
         Show Expensive Products
+      </button>
+      <button onClick={clearFilters}>
+      Clear Filters
       </button>
 
       <button
