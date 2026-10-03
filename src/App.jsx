@@ -1,50 +1,61 @@
 import ProductCard from './components/ProductCard'
-import './App.css'
-import { useState } from 'react'
 import SearchBar from './components/SearchBar'
+import './App.css'
+import { useState, useEffect } from 'react'
+import { getProducts } from './services/productService'
 
 function App() {
-  const [search, setSearch] = useState("");
-  const [showExpensive, setShowExpensive] = useState(false);
-  const [sortAscending, setSortAscending] = useState(false);
+  const [search, setSearch] = useState("")
+  const [showExpensive, setShowExpensive] = useState(false)
+  const [sortAscending, setSortAscending] = useState(false)
+  const [products, setProducts] = useState([])
 
-  const products = [
-  { id: 1, name: "Laptop", price: 1200 },
-  { id: 2, name: "Keyboard", price: 80 },
-  { id: 3, name: "Desk", price: 300 },
-]
+  useEffect(() => {
+    async function loadProducts() {
+      const data = await getProducts()
+      setProducts(data)
+    }
+
+    loadProducts()
+  }, [])
+
   const filteredProducts = products.filter((product) =>
-  ((showExpensive === true)
-  ? product.price > 100 
-  : true )&&
-  product.name.toLowerCase().includes(search.toLowerCase()))
+    ((showExpensive === true)
+      ? product.price > 100
+      : true) &&
+    product.title.toLowerCase().includes(search.toLowerCase())
+  )
+
   return (
     <div>
       <h1>Product Explorer</h1>
+
       <p>Products found: {filteredProducts.length}</p>
+
       <button
-      onClick={() => setShowExpensive(!showExpensive)}>
+        onClick={() => setShowExpensive(!showExpensive)}
+      >
         Show Expensive Products
       </button>
+
       <button
-      onClick={() => setSearch("")}>
+        onClick={() => setSearch("")}
+      >
         Clear Search
       </button>
-      {/* <input
-       type="text"
-       placeholder='Search products'
-       value={search}
-       onChange={(event) => setSearch(event.target.value)} /> */}
-       {/* commented this beacuse i moved it to searchbar.jsx */}
-       <SearchBar  search={search} setSearch={setSearch} />
-    {filteredProducts.map((product) => (
-  <ProductCard
-    key={product.id}
-    name={product.name}
-    price={product.price}
-  />
-))}
-      
+
+      <SearchBar
+        search={search}
+        setSearch={setSearch}
+      />
+
+      {filteredProducts.map((product) => (
+        <ProductCard
+          key={product.id}
+          name={product.title}
+          price={product.price}
+        />
+      ))}
     </div>
   )
 }
