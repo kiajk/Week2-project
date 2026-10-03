@@ -6,6 +6,8 @@ import { getProducts } from './services/productService'
 import ErrorState from './components/ErrorState'
 import EmptyState from './components/EmptyState'
 import CategoryFilter from './components/CategoryFilter'
+import AvailabilityFilter from './components/AvailabilityFilter'
+
 
 function App() {
   const [search, setSearch] = useState("");
@@ -15,6 +17,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [category, setCategory] = useState("")
+  const [availableOnly, setAvailableOnly] = useState(false)
 
   useEffect(() => {
    async function loadProducts() {
@@ -37,6 +40,9 @@ function App() {
       (category === ""
         ? true
         :product.category === category) &&
+        (availableOnly
+        ? product.stock > 0
+        : true) &&
     product.title.toLowerCase().includes(search.toLowerCase())
   )
   const categories = [...new Set(products.map((product) => product.category))]
@@ -72,6 +78,10 @@ function App() {
          setCategory={setCategory}
          categories={categories}
       />
+      <AvailabilityFilter
+       availableOnly={availableOnly}
+        setAvailableOnly={setAvailableOnly}
+      />
 
      {filteredProducts.length === 0 ? (
   <EmptyState />
@@ -81,6 +91,7 @@ function App() {
       key={product.id}
       name={product.title}
       price={product.price}
+      // stock={product.stock}
     />
   ))
 )}

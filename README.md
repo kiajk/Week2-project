@@ -66,3 +66,8 @@ Stage 17 — Empty State
 - Created a reusable `CategoryFilter` component.
 - Used `Set` to remove duplicate categories.
 - Combined category filtering with search and price filtering.
+### Stage 19 — Available Only Filter
+
+- Added an Available Only checkbox.
+- Filtered products by stock availability.
+- Combined availability filtering with search, category, and price filters.
