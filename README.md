@@ -36,3 +36,11 @@ Stage 07 — ProductCard + map()
 - Used `filteredProducts.length` to count filtered products.
 - Displayed the number of matching products.
 - The count updates automatically when search or filters change.
+Stage 14 — API Fetch
+
+* Connected the app to a real product API.
+* Created a separate productService.js file for API requests.
+* Used fetch() and async/await to get products.
+* Used useEffect() to fetch products when the app loads.
+* Stored API data in React state with useState.
+* Updated the product rendering and search logic to work with API data.

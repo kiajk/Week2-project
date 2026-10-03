@@ -9,11 +9,13 @@ function App() {
   const [showExpensive, setShowExpensive] = useState(false)
   const [sortAscending, setSortAscending] = useState(false)
   const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadProducts() {
       const data = await getProducts()
       setProducts(data)
+      setLoading(false)
     }
 
     loadProducts()
@@ -29,6 +31,8 @@ function App() {
   return (
     <div>
       <h1>Product Explorer</h1>
+
+      {loading && <p>loading products...</p>}
 
       <p>Products found: {filteredProducts.length}</p>
 
