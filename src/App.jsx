@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { getProducts } from './services/productService'
 import ErrorState from './components/ErrorState'
 import EmptyState from './components/EmptyState'
+import CategoryFilter from './components/CategoryFilter'
 
 function App() {
   const [search, setSearch] = useState("");
@@ -13,6 +14,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [category, setCategory] = useState("")
 
   useEffect(() => {
    async function loadProducts() {
@@ -32,8 +34,12 @@ function App() {
     ((showExpensive === true)
       ? product.price > 100
       : true) &&
+      (category === ""
+        ? true
+        :product.category === category) &&
     product.title.toLowerCase().includes(search.toLowerCase())
   )
+  const categories = [...new Set(products.map((product) => product.category))]
 
   return (
     <div>
@@ -60,6 +66,11 @@ function App() {
       <SearchBar
         search={search}
         setSearch={setSearch}
+      />
+      <CategoryFilter
+        category={category}
+         setCategory={setCategory}
+         categories={categories}
       />
 
      {filteredProducts.length === 0 ? (

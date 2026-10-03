@@ -60,3 +60,9 @@ Stage 17 — Empty State
 * Added an empty state for cases where no products match the search or filters.
 * Created a reusable EmptyState component.
 * Displayed a message when the filtered product list is empty.
+### Stage 18 — Category Filter
+
+- Added a category filter based on product categories from the API.
+- Created a reusable `CategoryFilter` component.
+- Used `Set` to remove duplicate categories.
+- Combined category filtering with search and price filtering.
