@@ -80,3 +80,9 @@ Stage 17 — Empty State
 
 - Added a button to reset all search and filter states.
 - Clears search, category, availability, price filter, and sorting.
+### Stage 22 — Product Details
+
+- Added product selection from the product list.
+- Created a reusable ProductDetails component.
+- Displayed detailed information for the selected product.
+- Added a button to close the details view.

@@ -1,63 +1,75 @@
 import ProductCard from './components/ProductCard'
 import SearchBar from './components/SearchBar'
-import './App.css'
-import { useState, useEffect } from 'react'
-import { getProducts } from './services/productService'
+import SortControl from './components/SortControl'
 import ErrorState from './components/ErrorState'
 import EmptyState from './components/EmptyState'
 import CategoryFilter from './components/CategoryFilter'
 import AvailabilityFilter from './components/AvailabilityFilter'
-import SortControl from './components/SortControl'
+import ProductDetails from './components/ProductDetails'
 
+import './App.css'
+import { useState, useEffect } from 'react'
+import { getProducts } from './services/productService'
 
 function App() {
-  const [search, setSearch] = useState("");
-  const [showExpensive, setShowExpensive] = useState(false);
-  const [sortAscending, setSortAscending] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [category, setCategory] = useState("");
-  const [availableOnly, setAvailableOnly] = useState(false);
-
-  function clearFilters() {
-  setSearch("")
-  setCategory("")
-  setAvailableOnly(false)
-  setShowExpensive(false)
-  setSortAscending(false)
-}
+  const [search, setSearch] = useState("")
+  const [showExpensive, setShowExpensive] = useState(false)
+  const [sortAscending, setSortAscending] = useState(false)
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const [category, setCategory] = useState("")
+  const [availableOnly, setAvailableOnly] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState(null)
 
   useEffect(() => {
-   async function loadProducts() {
-  try {
-    const data = await getProducts()
-    setProducts(data)
-  } catch (error) {
-    setError("Failed to load products.")
-  } finally {
-    setLoading(false)
-  }
-}
+    async function loadProducts() {
+      try {
+        const data = await getProducts()
+        setProducts(data)
+      } catch (error) {
+        setError("Failed to load products.")
+      } finally {
+        setLoading(false)
+      }
+    }
+
     loadProducts()
   }, [])
 
   const filteredProducts = products.filter((product) =>
-    ((showExpensive === true)
+    (showExpensive
       ? product.price > 100
       : true) &&
-      (category === ""
-        ? true
-        :product.category === category) &&
-        (availableOnly
-        ? product.stock > 0
-        : true) &&
+
+    (category === ""
+      ? true
+      : product.category === category) &&
+
+    (availableOnly
+      ? product.stock > 0
+      : true) &&
+
     product.title.toLowerCase().includes(search.toLowerCase())
   )
-  const categories = [...new Set(products.map((product) => product.category))]
+
   const sortedProducts = [...filteredProducts].sort((a, b) =>
-  sortAscending ? a.price - b.price : b.price - a.price
-)
+    sortAscending
+      ? a.price - b.price
+      : b.price - a.price
+  )
+
+  const categories = [
+    ...new Set(products.map((product) => product.category))
+  ]
+
+  function clearFilters() {
+    setSearch("")
+    setCategory("")
+    setAvailableOnly(false)
+    setShowExpensive(false)
+    setSortAscending(false)
+  }
 
   return (
     <div>
@@ -67,53 +79,58 @@ function App() {
 
       {error && <ErrorState />}
 
-      <p>Products found: {filteredProducts.length}</p>
+      <p>Products found: {sortedProducts.length}</p>
 
       <button
         onClick={() => setShowExpensive(!showExpensive)}
       >
         Show Expensive Products
       </button>
-      <button onClick={clearFilters}>
-      Clear Filters
-      </button>
 
-      <button
-        onClick={() => setSearch("")}
-      >
-        Clear Search
+      <button onClick={clearFilters}>
+        Clear Filters
       </button>
 
       <SearchBar
         search={search}
         setSearch={setSearch}
       />
+
+      <CategoryFilter
+        category={category}
+        setCategory={setCategory}
+        categories={categories}
+      />
+
+      <AvailabilityFilter
+        availableOnly={availableOnly}
+        setAvailableOnly={setAvailableOnly}
+      />
+
       <SortControl
         sortAscending={sortAscending}
         setSortAscending={setSortAscending}
       />
-      <CategoryFilter
-        category={category}
-         setCategory={setCategory}
-         categories={categories}
-      />
-      <AvailabilityFilter
-       availableOnly={availableOnly}
-        setAvailableOnly={setAvailableOnly}
-      />
 
-     {filteredProducts.length === 0 ? (
-  <EmptyState />
-) : (
-  sortedProducts.map((product) => (
-    <ProductCard
-      key={product.id}
-      name={product.title}
-      price={product.price}
-      // stock={product.stock}
-    />
-  ))
-)}
+      {sortedProducts.length === 0 ? (
+        <EmptyState />
+      ) : (
+        sortedProducts.map((product) => (
+          <ProductCard
+            key={product.id}
+            name={product.title}
+            price={product.price}
+            onSelect={() => setSelectedProduct(product)}
+          />
+        ))
+      )}
+
+      {selectedProduct && (
+        <ProductDetails
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
     </div>
   )
 }
