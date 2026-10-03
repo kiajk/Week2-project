@@ -3,21 +3,27 @@ import SearchBar from './components/SearchBar'
 import './App.css'
 import { useState, useEffect } from 'react'
 import { getProducts } from './services/productService'
+import ErrorState from './components/ErrorState'
 
 function App() {
-  const [search, setSearch] = useState("")
-  const [showExpensive, setShowExpensive] = useState(false)
-  const [sortAscending, setSortAscending] = useState(false)
-  const [products, setProducts] = useState([])
+  const [search, setSearch] = useState("");
+  const [showExpensive, setShowExpensive] = useState(false);
+  const [sortAscending, setSortAscending] = useState(false);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    async function loadProducts() {
-      const data = await getProducts()
-      setProducts(data)
-      setLoading(false)
-    }
-
+   async function loadProducts() {
+  try {
+    const data = await getProducts()
+    setProducts(data)
+  } catch (error) {
+    setError("Failed to load products.")
+  } finally {
+    setLoading(false)
+  }
+}
     loadProducts()
   }, [])
 
@@ -33,6 +39,8 @@ function App() {
       <h1>Product Explorer</h1>
 
       {loading && <p>loading products...</p>}
+
+      {error && <ErrorState />}
 
       <p>Products found: {filteredProducts.length}</p>
 

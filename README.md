@@ -49,3 +49,9 @@ Stage 15 — Loading State
 * Added a loading state for API requests.
 * Displayed a loading message while products are being fetched.
 * Updated the loading state after the API response is received.
+Stage 16 — Error State
+
+* Added error handling for API requests using try/catch.
+* Added an error state to store API errors.
+* Created a reusable ErrorState component.
+* Used finally to stop the loading state after the request finishes.
