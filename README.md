@@ -44,3 +44,8 @@ Stage 14 — API Fetch
 * Used useEffect() to fetch products when the app loads.
 * Stored API data in React state with useState.
 * Updated the product rendering and search logic to work with API data.
+Stage 15 — Loading State
+
+* Added a loading state for API requests.
+* Displayed a loading message while products are being fetched.
+* Updated the loading state after the API response is received.
