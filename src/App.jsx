@@ -4,6 +4,7 @@ import './App.css'
 import { useState, useEffect } from 'react'
 import { getProducts } from './services/productService'
 import ErrorState from './components/ErrorState'
+import EmptyState from './components/EmptyState'
 
 function App() {
   const [search, setSearch] = useState("");
@@ -61,13 +62,17 @@ function App() {
         setSearch={setSearch}
       />
 
-      {filteredProducts.map((product) => (
-        <ProductCard
-          key={product.id}
-          name={product.title}
-          price={product.price}
-        />
-      ))}
+     {filteredProducts.length === 0 ? (
+  <EmptyState />
+) : (
+  filteredProducts.map((product) => (
+    <ProductCard
+      key={product.id}
+      name={product.title}
+      price={product.price}
+    />
+  ))
+)}
     </div>
   )
 }

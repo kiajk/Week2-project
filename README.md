@@ -55,3 +55,8 @@ Stage 16 — Error State
 * Added an error state to store API errors.
 * Created a reusable ErrorState component.
 * Used finally to stop the loading state after the request finishes.
+Stage 17 — Empty State
+
+* Added an empty state for cases where no products match the search or filters.
+* Created a reusable EmptyState component.
+* Displayed a message when the filtered product list is empty.
