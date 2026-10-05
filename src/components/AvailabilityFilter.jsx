@@ -1,14 +1,20 @@
-function AvailabilityFilter({ availableOnly, setAvailableOnly }) {
-
+function AvailabilityFilter({
+  availableOnly,
+  onAvailabilityChange
+}) {
   return (
     <label>
-    <input type="checkbox" 
-    checked={availableOnly}
-    onChange={(event) => setAvailableOnly(event.target.checked)}/>
-  Available Only
+      <input
+        type="checkbox"
+        checked={availableOnly}
+        onChange={(event) =>
+          onAvailabilityChange(event.target.checked)
+        }
+      />
 
-  </label>
+      Available Only
+    </label>
   )
-} 
+}
 
 export default AvailabilityFilter

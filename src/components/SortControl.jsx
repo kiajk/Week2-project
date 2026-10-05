@@ -1,13 +1,19 @@
-function SortControl({ sortAscending, setSortAscending }) {
-
+function SortControl({
+  sortAscending,
+  onSortChange
+}) {
   return (
-    <select 
-    value={sortAscending ? "asc" : "desc"}
-    onChange={(event) => 
-    setSortAscending(event.target.value === "asc")}>
-        <option value="desc">price:High to Low</option>
-        <option value="asc">price:Low to High</option>
-    </select>
+    <label>
+      <input
+        type="checkbox"
+        checked={sortAscending}
+        onChange={(event) =>
+          onSortChange(event.target.checked)
+        }
+      />
+
+      Sort by Price: Low to High
+    </label>
   )
 }
 

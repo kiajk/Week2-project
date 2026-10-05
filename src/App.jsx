@@ -6,12 +6,15 @@ import EmptyState from './components/EmptyState'
 import CategoryFilter from './components/CategoryFilter'
 import AvailabilityFilter from './components/AvailabilityFilter'
 import ProductDetails from './components/ProductDetails'
-
 import './App.css'
 import { useState, useEffect } from 'react'
 import { getProducts } from './services/productService'
-
-function App() {  
+import {
+  filterProducts,
+  sortProducts,
+  getCategories
+} from './utils/productUtils'
+function App() {
   const [search, setSearch] = useState("")
   const [showExpensiveOnly, setShowExpensiveOnly] = useState(false)
   const [sortAscending, setSortAscending] = useState(false)
@@ -21,7 +24,6 @@ function App() {
   const [category, setCategory] = useState("")
   const [availableOnly, setAvailableOnly] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
-
   useEffect(() => {
     async function loadProducts() {
       try {
@@ -33,36 +35,20 @@ function App() {
         setLoading(false)
       }
     }
-
     loadProducts()
   }, [])
-
-  const filteredProducts = products.filter((product) =>
-    (showExpensiveOnly
-      ? product.price > 100
-      : true) &&
-
-    (category === ""
-      ? true
-      : product.category === category) &&
-
-    (availableOnly
-      ? product.stock > 0
-      : true) &&
-
-    product.title.toLowerCase().includes(search.toLowerCase())
+  const filteredProducts = filterProducts(
+    products,
+    search,
+    showExpensiveOnly,
+    category,
+    availableOnly
   )
-
-  const sortedProducts = [...filteredProducts].sort((a, b) =>
+  const sortedProducts = sortProducts(
+    filteredProducts,
     sortAscending
-      ? a.price - b.price
-      : b.price - a.price
   )
-
-  const categories = [
-    ...new Set(products.map((product) => product.category))
-  ]
-
+  const categories = getCategories(products)
   function clearFilters() {
     setSearch("")
     setCategory("")
@@ -70,48 +56,37 @@ function App() {
     setShowExpensiveOnly(false)
     setSortAscending(false)
   }
-
   return (
     <div>
       <h1>Product Explorer</h1>
-
       {loading && <p>loading products...</p>}
-
       {error && <ErrorState />}
-
       <p>Products found: {sortedProducts.length}</p>
-
       <button
         onClick={() => setShowExpensiveOnly(!showExpensiveOnly)}
       >
         Show Expensive Products
       </button>
-
       <button onClick={clearFilters}>
         Clear Filters
       </button>
-
       <SearchBar
         search={search}
-        setSearch={setSearch}
+        onSearchChange={setSearch}
       />
-
       <CategoryFilter
         category={category}
-        setCategory={setCategory}
+        onCategoryChange={setCategory}
         categories={categories}
       />
-
       <AvailabilityFilter
         availableOnly={availableOnly}
-        setAvailableOnly={setAvailableOnly}
+        onAvailabilityChange={setAvailableOnly}
       />
-
       <SortControl
         sortAscending={sortAscending}
-        setSortAscending={setSortAscending}
+        onSortChange={setSortAscending}
       />
-
       {sortedProducts.length === 0 ? (
         <EmptyState />
       ) : (
@@ -124,7 +99,6 @@ function App() {
           />
         ))
       )}
-
       {selectedProduct && (
         <ProductDetails
           product={selectedProduct}
@@ -134,5 +108,4 @@ function App() {
     </div>
   )
 }
-
 export default App
