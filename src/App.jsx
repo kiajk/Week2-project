@@ -11,9 +11,9 @@ import './App.css'
 import { useState, useEffect } from 'react'
 import { getProducts } from './services/productService'
 
-function App() {
+function App() {  
   const [search, setSearch] = useState("")
-  const [showExpensive, setShowExpensive] = useState(false)
+  const [showExpensiveOnly, setShowExpensiveOnly] = useState(false)
   const [sortAscending, setSortAscending] = useState(false)
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -38,7 +38,7 @@ function App() {
   }, [])
 
   const filteredProducts = products.filter((product) =>
-    (showExpensive
+    (showExpensiveOnly
       ? product.price > 100
       : true) &&
 
@@ -67,7 +67,7 @@ function App() {
     setSearch("")
     setCategory("")
     setAvailableOnly(false)
-    setShowExpensive(false)
+    setShowExpensiveOnly(false)
     setSortAscending(false)
   }
 
@@ -82,7 +82,7 @@ function App() {
       <p>Products found: {sortedProducts.length}</p>
 
       <button
-        onClick={() => setShowExpensive(!showExpensive)}
+        onClick={() => setShowExpensiveOnly(!showExpensiveOnly)}
       >
         Show Expensive Products
       </button>
