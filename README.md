@@ -86,3 +86,13 @@ Stage 17 — Empty State
 - Created a reusable ProductDetails component.
 - Displayed detailed information for the selected product.
 - Added a button to close the details view.
+
+  App
+├── ErrorState
+├── SearchBar
+├── CategoryFilter
+├── AvailabilityFilter
+├── SortControl
+├── ProductCard
+└── ProductDetails
+component tree
