@@ -96,3 +96,31 @@ Stage 17 — Empty State
 ├── ProductCard
 └── ProductDetails
 component tree
+Component Responsibilities
+
+Component	Responsibility	Props	State	State Location
+App	مدیریت کلی برنامه، دریافت محصولات، فیلتر و مرتب‌سازی	—	search, products, loading, error, category, availableOnly, showExpensiveOnly, sortAscending, selectedProduct	App
+SearchBar	دریافت عبارت جستجو از کاربر	search, setSearch	ندارد	Parent (App)
+CategoryFilter	انتخاب دسته‌بندی محصولات	category, setCategory, categories	ندارد	Parent (App)
+AvailabilityFilter	فیلتر کردن محصولات موجود	availableOnly, setAvailableOnly	ندارد	Parent (App)
+SortControl	کنترل ترتیب نمایش محصولات	sortAscending, setSortAscending	ندارد	Parent (App)
+ProductCard	نمایش اطلاعات یک محصول و انتخاب آن	name, price, onSelect	ندارد	—
+ProductDetails	نمایش جزئیات محصول انتخاب‌شده	product, onClose	ندارد	Parent (App)
+ErrorState	نمایش وضعیت خطا	—	ندارد	—
+EmptyState	نمایش پیام زمانی که محصولی برای نمایش وجود ندارد	—	ندارد	—
+
+State Ownership
+
+State در App قرار دارد چون چند Component مختلف به آن نیاز دارند و App باید بین آن‌ها هماهنگی ایجاد کند.
+
+Componentهای فرزند تا حد امکان State مربوط به داده‌های اصلی برنامه را نگه نمی‌دارند و از طریق Props با App ارتباط برقرار می‌کنند.
+
+Derived Data
+
+مقادیر زیر State نیستند، چون از Stateهای موجود قابل محاسبه هستند:
+
+* filteredProducts
+* sortedProducts
+* categories
+
+این مقادیر در هر Render از داده‌های موجود محاسبه می‌شوند.
